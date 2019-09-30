@@ -1,10 +1,11 @@
-package id.ac.polinema.idealbodyweight;
+package id.ac.polinema.idealbodyweight.fragment;
 
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import id.ac.polinema.idealbodyweight.R;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -2,16 +2,20 @@ package id.ac.polinema.idealbodyweight;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import id.ac.polinema.idealbodyweight.fragment.AboutFragment;
+import id.ac.polinema.idealbodyweight.fragment.MenuFragment;
 
-import android.content.ClipData;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+		MenuFragment.OnFragmentInteractionListenernListener {
+
 
 	// Deklarasikan atribut Fragment di sini
 	private AboutFragment aboutFragment;
+	private MenuFragment menuFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 		aboutFragment = AboutFragment.newInstance("Aditya Panca Putra");
+		menuFragment = new MenuFragment();
+
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragment_container, menuFragment)
+				.commit();
 	}
 
 	@Override
