@@ -3,6 +3,7 @@ package id.ac.polinema.idealbodyweight;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import id.ac.polinema.idealbodyweight.fragment.AboutFragment;
+import id.ac.polinema.idealbodyweight.fragment.BodyMassFragment;
 import id.ac.polinema.idealbodyweight.fragment.BrocaIndexFragment;
 import id.ac.polinema.idealbodyweight.fragment.MenuFragment;
 import id.ac.polinema.idealbodyweight.fragment.ResultFragment;
@@ -15,13 +16,16 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity implements
 		MenuFragment.OnFragmentInteractionListener,
 		BrocaIndexFragment.OnFragmentInteractionListener,
-		ResultFragment.OnFragmentInteractionListener {
+		ResultFragment.OnFragmentInteractionListener,
+        BodyMassFragment.OnFragmentInteractionListener {
 
 	// Deklarasikan atribut Fragment di sini
 	private AboutFragment aboutFragment;
 	private MenuFragment menuFragment;
 	private BrocaIndexFragment brocaIndexFragment;
 	private ResultFragment resultFragment;
+    private BodyMassFragment bodyMassFragment;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements
 		menuFragment = new MenuFragment();
 		brocaIndexFragment = new BrocaIndexFragment();
 		resultFragment = new ResultFragment();
+        bodyMassFragment = new BodyMassFragment();
 
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.fragment_container, menuFragment)
@@ -77,7 +82,9 @@ public class MainActivity extends AppCompatActivity implements
 
 	@Override
 	public void onBodyMassIndexButtonClicked() {
-
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, bodyMassFragment)
+                .commit();
 	}
 
 	@Override
@@ -91,4 +98,9 @@ public class MainActivity extends AppCompatActivity implements
 				.replace(R.id.fragment_container, brocaIndexFragment)
 				.commit();
 	}
+
+    @Override
+    public void onCalculateBodyMassIndexClicked(float index) {
+
+    }
 }
