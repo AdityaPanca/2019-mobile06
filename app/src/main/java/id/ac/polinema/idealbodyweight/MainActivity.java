@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import id.ac.polinema.idealbodyweight.fragment.AboutFragment;
 import id.ac.polinema.idealbodyweight.fragment.BrocaIndexFragment;
 import id.ac.polinema.idealbodyweight.fragment.MenuFragment;
+import id.ac.polinema.idealbodyweight.fragment.ResultFragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,12 +14,14 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements
 		MenuFragment.OnFragmentInteractionListener,
-		BrocaIndexFragment.OnFragmentInteractionListener {
+		BrocaIndexFragment.OnFragmentInteractionListener,
+		ResultFragment.OnFragmentInteractionListener {
 
 	// Deklarasikan atribut Fragment di sini
 	private AboutFragment aboutFragment;
 	private MenuFragment menuFragment;
 	private BrocaIndexFragment brocaIndexFragment;
+	private ResultFragment resultFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements
 		aboutFragment = AboutFragment.newInstance("Aditya Panca Putra");
 		menuFragment = new MenuFragment();
 		brocaIndexFragment = new BrocaIndexFragment();
+		resultFragment = new ResultFragment();
 
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.fragment_container, menuFragment)
@@ -57,7 +61,10 @@ public class MainActivity extends AppCompatActivity implements
 
 	@Override
 	public void onCalculateBrocaIndexClicked(float index) {
-
+		resultFragment.setInformation(String.format("Your ideal weight is %.2f kg", index));
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragment_container, resultFragment)
+				.commit();
 	}
 
 	@Override
@@ -76,5 +83,12 @@ public class MainActivity extends AppCompatActivity implements
 	@Override
 	public void onFragmentInteraction(Uri uri) {
 
+	}
+
+	@Override
+	public void onTryAgainButtonClicked(String tag) {
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragment_container, brocaIndexFragment)
+				.commit();
 	}
 }
