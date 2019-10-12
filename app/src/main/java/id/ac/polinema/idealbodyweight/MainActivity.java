@@ -13,94 +13,72 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements
-		MenuFragment.OnFragmentInteractionListener,
-		BrocaIndexFragment.OnFragmentInteractionListener,
-		ResultFragment.OnFragmentInteractionListener,
-        BodyMassFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements MenuFragment.OnFragmentInteractionListener,
+		BrocaIndexFragment.OnFragmentInteractionListener, ResultFragment.OnFragmentInteractionListener,
+		BodyMassFragment.OnFragmentInteractionListener{
 
 	// Deklarasikan atribut Fragment di sini
 	private AboutFragment aboutFragment;
 	private MenuFragment menuFragment;
 	private BrocaIndexFragment brocaIndexFragment;
+	private BodyMassFragment bodyMassFragment;
 	private ResultFragment resultFragment;
-    private BodyMassFragment bodyMassFragment;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
-		aboutFragment = AboutFragment.newInstance("Aditya Panca Putra");
+		aboutFragment = AboutFragment.newInstance("Ahmad Musyadad Aminullah");
 		menuFragment = new MenuFragment();
 		brocaIndexFragment = new BrocaIndexFragment();
 		resultFragment = new ResultFragment();
-        bodyMassFragment = new BodyMassFragment();
-
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.fragment_container, menuFragment)
-				.commit();
+		bodyMassFragment = new BodyMassFragment();
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, menuFragment).commit();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu, menu);
 		return  true;
-
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-		if (item.getItemId() == R.id.menu_about) {
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.fragment_container, aboutFragment)
-					.addToBackStack(null)
-					.commit();
-		}
 		// TODO: Tambahkan penanganan menu di sini
-
+		if (item.getItemId() == R.id.menu_about) {
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, aboutFragment).addToBackStack(null).commit();
+		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBrocaIndexButtonClicked() {
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, brocaIndexFragment, "BrocaIndex").		addToBackStack(null).commit();
+	}
+
+	@Override
+	public void onBodyMassIndexButtonClicked() {
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, bodyMassFragment, "BodyMassIndex").addToBackStack(null).commit();
 	}
 
 	@Override
 	public void onCalculateBrocaIndexClicked(float index) {
 		resultFragment.setInformation(String.format("Your ideal weight is %.2f kg", index));
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.fragment_container, resultFragment)
-				.commit();
-	}
-
-	@Override
-	public void onBrocaIndexButtonClicked() {
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.fragment_container, brocaIndexFragment)
-				.commit();
-	}
-
-
-	@Override
-	public void onBodyMassIndexButtonClicked() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, bodyMassFragment)
-                .commit();
-	}
-
-	@Override
-	public void onFragmentInteraction(Uri uri) {
-
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, resultFragment).commit();
 	}
 
 	@Override
 	public void onTryAgainButtonClicked(String tag) {
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.fragment_container, brocaIndexFragment)
-				.commit();
+		if (tag.equalsIgnoreCase("BrocaIndex")){
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, brocaIndexFragment).commit();
+		} else {
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, bodyMassFragment).commit();
+		}
 	}
 
-    @Override
-    public void onCalculateBodyMassIndexClicked(float index) {
-
-    }
+	@Override
+	public void onCalculateBodyMassIndex(float index, String classific) {
+		resultFragment.setInformation(String.format("Your BMI is %.2f kg \r\n" + classific, index));
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, resultFragment).commit();
+	}
 }

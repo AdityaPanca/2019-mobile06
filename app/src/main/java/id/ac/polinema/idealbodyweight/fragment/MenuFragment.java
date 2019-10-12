@@ -36,8 +36,6 @@ public class MenuFragment extends Fragment {
         Button brocaButton = view.findViewById(R.id.button_broca);
         Button bmiButton = view.findViewById(R.id.button_bmi);
 
-        // sisipkan register event click nanti di sini.
-
         brocaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,18 +53,10 @@ public class MenuFragment extends Fragment {
                 }
             }
         });
-
-
-
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -96,14 +86,8 @@ public class MenuFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-
-        void onBrocaIndexButtonClicked();
-
-        void onBodyMassIndexButtonClicked();
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
-    public interface OnFragmentInteractionListenernListener {
+        void onBrocaIndexButtonClicked();
+        void onBodyMassIndexButtonClicked();
     }
 }
